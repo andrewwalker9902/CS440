@@ -6,9 +6,9 @@ const port = 3000;
 
 // Create a connection to the MySQL database
 const db = mysql.createConnection({
-  host: '127.0.0.1', // Replace with your MySQL host
+  host: 'localhost', // Replace with your MySQL host
   user: 'root',      // Replace with your MySQL username
-  password: '', // Replace with your MySQL password
+  password: 'root', // Replace with your MySQL password
   database: 'Items' // Replace with your database name
 });
 
@@ -31,6 +31,7 @@ app.get('/shoes', (req, res) => {
       res.status(500).send('Error querying the database.');
       return;
     }
+    console.log("Shoe table: ", results);
     res.json(results);
   });
 });
