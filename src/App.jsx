@@ -13,7 +13,7 @@ function App() {
           <Link to="/">Home</Link>
           <Link to="/products">Products</Link>
           <Link to="/about">About Us</Link>
-          <Link to="/contact">Contact</Link>
+          <Link to="/contact">Contacts</Link>
         </nav>
         <div className="login-container">
           <p>
