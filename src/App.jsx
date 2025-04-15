@@ -32,14 +32,7 @@ function App() {
         </header>
 
         <main>
-        <div class="dropdown">
-          <button class="dropbtn">Dropdown</button>
-          <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-          </div>
-        </div>
+        
           <Routes>
             <Route
               path="/"
@@ -48,8 +41,17 @@ function App() {
                   <h2>Welcome to Roy's!</h2>
                   <p>
                     Since our founding, we have been the place to find good stuff at prices much steeper than most!
-                  </p>
+                  </p>  
+                  <div class="dropdown">
+                    <button class="dropbtn">Categories</button>
+                    <div class="dropdown-content">
+                      <a href="#">Shoes</a>
+                      <a href="#">Apparel</a>
+                      <a href="#">Equiptment</a>
+                    </div>
+                </div>
                 </section>
+                
               }
             />
             <Route path="/about" element={<About />} />
