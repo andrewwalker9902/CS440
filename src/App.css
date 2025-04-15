@@ -1,67 +1,260 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Reset some basic styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* Ensure full screen layout */
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* App wrapper */
 body {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   background-color: #ffffff;
+
 }
-header {
-  background-color: #333;
-  color: #fff;
-  padding: 1rem 0;
+
+/* Header styles */
+.header {
+  display: flex;
+  justify-content: space-between; /* Distributes space between elements */
+  align-items: center; /* Centers content vertically */
+  background-color: #a51717; /* Header background color */
+  color: white; /* Header text color */
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Hamburger + logo container */
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.hamburger {
+  font-size: 28px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: block; /* Ensure the hamburger menu is visible */
+}
+
+.header-title-container {
+  flex: 1;
+  text-align: center; /* Centers the title */
+}
+
+.header-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none; /* Removes the underline */
+  color: white; /* Ensures the text is white, not blue */
+  cursor: pointer;
+}
+
+.header-title:hover {
+  text-decoration: none; /* No underline on hover */
+  color: white;
+}
+
+/* Nav styles */
+.nav-links {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  background-color: #1a1a1a;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1000;
+}
+
+.nav-links a {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  padding: 8px 0;
+}
+
+.nav-links.open {
+  display: flex;
+}
+
+/* Right-side login button */
+.header-right .login-button {
+  background-color: #ffffff;
+  color: #1a1a1a;
+  padding: 8px 12px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* Small Login Button */
+.login-button {
+  text-decoration: none;
+  color: #ffffff; /* White text */
+  background-color: #007BFF; /* Blue background */
+  padding: 5px 10px; /* Compact padding */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 14px; /* Smaller font size */
+  font-weight: bold;
+  border: none; /* Remove border */
+  cursor: pointer;
+}
+
+.login-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 20px;
   text-align: center;
+  background-color: #ffffff; /* Light background */
+  color: #111111;            /* Dark text */
+  min-height: calc(100vh - 60px); /* Full screen minus header */
 }
-nav {
-  text-align: center;
-  margin: 1rem 0;
+
+section {
+  max-width: 800px;
 }
-nav a {
+
+/* Categories Bar */
+.categories-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f4f4f4;
+  padding: 10px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.categories-bar a,
+.dropdown-button {
+  margin: 0 15px;
   text-decoration: none;
   color: #333;
-  margin: 0 1rem;
   font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
 }
-.login-container {
-  text-align: center;
-  margin-top: 2rem;
+
+.categories-bar a:hover,
+.dropdown-button:hover {
+  color: #a51717;
 }
-.login-container a {
-  text-decoration: none;
-  color: #fff;
-  background-color: #007BFF;
-  padding: 0.5rem 1rem;
+
+/* Dropdown Menu */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  font-weight: bold;
-}
-.login-container a:hover {
-  background-color: #0056b3;
+  padding: 10px 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.dropdown-menu a {
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f4f4f4;
+  color: #a51717;
+}
+
+/* Responsive nav for larger screens */
+@media (min-width: 768px) {
+  .nav-links {
+    position: static;
+    display: flex !important;
+    flex-direction: row;
+    background: none;
+    padding: 0;
   }
-  to {
-    transform: rotate(360deg);
+
+  .nav-links a {
+    margin-left: 20px;
+    padding: 0;
+  }
+
+  .hamburger {
+    display: none; /* Hide hamburger menu on larger screens */
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* Dropdown Button */
+.dropbtn {
+  background-color: #ff0000;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
 }
 
-.card {
-  padding: 2em;
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
 }
 
-.read-the-docs {
-  color: #888;
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
 }
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #ff0000;}
