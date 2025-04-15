@@ -14,10 +14,17 @@ html, body, #root {
 
 /* App wrapper */
 body {
+
   display: flex;
   justify-content: center;
   align-items: center;
   background: #ffffff;
+
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+
 }
 
 /* Header styles */
