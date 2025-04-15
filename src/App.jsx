@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import About from './About';
+import Login from './Login'; // Import the Login component
 import './App.css';
 import { useState } from 'react';
 
@@ -22,12 +23,23 @@ function App() {
               Roy's Sporting Center
             </Link>
           </div>
-          <a href="login.html" className="login-button">
-            Login
-          </a>
+          <div className="header-right">
+            <Link to="/login" className="login-button">
+              Login
+            </Link>
+          </div>
+          
         </header>
 
         <main>
+        <div class="dropdown">
+          <button class="dropbtn">Dropdown</button>
+          <div class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
+        </div>
           <Routes>
             <Route
               path="/"
@@ -41,12 +53,12 @@ function App() {
               }
             />
             <Route path="/about" element={<About />} />
+            <Route path="/login" element={<Login />} /> {/* Add route for Login */}
           </Routes>
         </main>
       </div>
     </Router>
   );
-
 }
 
 export default App;
