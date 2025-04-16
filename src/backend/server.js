@@ -2,7 +2,9 @@ import express from 'express';
 import mysql from 'mysql2';
 
 const app = express();
+app.use(express.json());
 const port = 3000;
+
 
 // Create a connection to the MySQL database
 const db = mysql.createConnection({
@@ -35,6 +37,78 @@ app.get('/shoes', (req, res) => {
     res.json(results);
   });
 });
+
+
+app.get('/equipment', (req, res) => {
+  const query = 'SELECT * FROM Equipment';
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).send('Error querying the database.');
+      return;
+    }
+    console.log("Equipment table: ", results);
+    res.json(results);
+  });
+});
+
+app.get('/apparel', (req, res) => {
+  const query = 'SELECT * FROM Apparel';
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).send('Error querying the database.');
+      return;
+    }
+    console.log("Apparel table: ", results);
+    res.json(results);
+  });
+});
+
+app.get('/user', (req, res) => {
+  const query = 'SELECT * FROM User';
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).send('Error querying the database.');
+      return;
+    }
+    console.log("User table: ", results);
+    res.json(results);
+  });
+});
+
+
+
+// Add a route to insert a new shoe
+app.post('/shoes', (req, res) => {
+  console.log('Request body:', req.body);
+  const { id, name, size } = req.body;
+
+  if (!id || !name || !size) {
+    return res.status(400).send('Missing required fields: id, name, or size.');
+  }
+
+  const query = 'INSERT INTO Shoe (id, name, size) VALUES (?, ?, ?)';
+
+  db.query(query, [id, name, size], (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      if (err.code === 'ER_DUP_ENTRY') {
+        return res.status(409).send(`A shoe with ID ${id} already exists.`);
+      }
+      return res.status(500).send('Error inserting into the database.');
+    }
+
+    console.log('Insert success:', results);
+    res.status(201).send('Shoe added successfully.');
+  });
+});
+
+
 
 // Start the server
 app.listen(port, () => {
