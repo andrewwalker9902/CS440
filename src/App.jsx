@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import About from './About';
-import Login from './Login'; // Import the Login component
+import Login from './Login';
+import Inventory from './Inventory';
 import './App.css';
 import { useState } from 'react';
 
@@ -24,15 +25,24 @@ function App() {
             </Link>
           </div>
           <div className="header-right">
+            <Link to="/inventory" className="login-button">
+              Inventory
+            </Link>
             <Link to="/login" className="login-button">
               Login
             </Link>
           </div>
-
         </header>
 
         <main>
-        
+          <div className="dropdown">
+            <button className="dropbtn">Dropdown</button>
+            <div className="dropdown-content">
+              <a href="#">Link 1</a>
+              <a href="#">Link 2</a>
+              <a href="#">Link 3</a>
+            </div>
+          </div>
           <Routes>
             <Route
               path="/"
@@ -55,7 +65,8 @@ function App() {
               }
             />
             <Route path="/about" element={<About />} />
-            <Route path="/login" element={<Login />} /> {/* Add route for Login */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/inventory" element={<Inventory />} />
           </Routes>
         </main>
       </div>
