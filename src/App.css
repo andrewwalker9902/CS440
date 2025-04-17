@@ -14,32 +14,30 @@ html, body, #root {
 
 /* App wrapper */
 body {
-
   display: flex;
   justify-content: center;
   align-items: center;
   background: #ffffff;
-
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   background-color: #ffffff;
-
 }
 
 /* Header styles */
 .header {
   display: flex;
-  justify-content: space-between; /* Distributes space between elements */
+  justify-content: center; /* Centers the title horizontally */
   align-items: center; /* Centers content vertically */
   background-color: #a51717; /* Header background color */
   color: white; /* Header text color */
-  padding: 10px 20px;
+  padding: 30px 30px;
   position: sticky;
   top: 0;
   z-index: 1000;
   width: 100%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative; /* Allows absolute positioning of child elements */
 }
 
 /* Hamburger + logo container */
@@ -49,24 +47,25 @@ body {
 }
 
 .hamburger {
+  position: absolute;
+  left: 20px; /* Positions the hamburger menu on the left */
   font-size: 28px;
   background: none;
   border: none;
   color: white;
   cursor: pointer;
-  display: block; /* Ensure the hamburger menu is visible */
 }
 
 .header-title-container {
-  flex: 1;
-  text-align: center; /* Centers the title */
+  text-align: center; /* Centers the title text */
+  flex: 1; /* Allows the title to take up remaining space */
 }
 
 .header-title {
   font-size: 24px;
   font-weight: bold;
   text-decoration: none; /* Removes the underline */
-  color: white; /* Ensures the text is white, not blue */
+  color: white; /* Ensures the text is white */
   cursor: pointer;
 }
 
@@ -99,6 +98,13 @@ body {
 }
 
 /* Right-side login button */
+.header-right {
+  position: absolute;
+  right: 20px; /* Positions the login button on the right */
+  display: flex;
+  gap: 10px; /* Adds spacing between buttons */
+}
+
 .header-right .login-button {
   background-color: #ffffff;
   color: #1a1a1a;
@@ -258,3 +264,102 @@ section {
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #ff0000;}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+  z-index: 5; /* Ensure slideshow is above other elements */
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+}
+
+.mySlides:first-child {
+  display: block;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Fix misalignment */
+  width: auto;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  z-index: 10; /* Ensure buttons are above images */
+  background-color: rgba(0, 0, 0, 0.5); /* Add background color for visibility */
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* Position the "prev button" to the left */
+.prev {
+  left: 0;
+  border-radius: 0 3px 3px 0;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
