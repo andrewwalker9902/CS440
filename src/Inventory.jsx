@@ -2,16 +2,55 @@ import React, { useState } from 'react';
 import './Inventory.css'; // Import the Inventory-specific styles
 
 const Inventory = () => {
-  const [type, setType] = useState('');
-  const [sport, setSport] = useState('');
+  const [category, setCategory] = useState('shoes'); // Default to "shoes"
 
-  const handleAdd = () => {
-    const enteredType = prompt('Enter the Type:');
-    const enteredSport = prompt('Enter the Sport:');
-    if (enteredType && enteredSport) {
-      setType(enteredType);
-      setSport(enteredSport);
-      console.log('Type:', enteredType, 'Sport:', enteredSport); // Debugging output
+  const handleAdd = async () => {
+    let enteredId = prompt('Enter the ID:');
+    let enteredName, enteredSize, enteredType, enteredSport;
+
+    if (category === 'shoes') {
+      enteredName = prompt('Enter the Name:');
+      enteredSize = prompt('Enter the Size:');
+      if (!enteredId || !enteredName || !enteredSize) {
+        alert('All fields are required!');
+        return;
+      }
+    } else if (category === 'equipment') {
+      enteredType = prompt('Enter the Type:');
+      enteredSport = prompt('Enter the Sport:');
+      if (!enteredId || !enteredType || !enteredSport) {
+        alert('All fields are required!');
+        return;
+      }
+    }
+
+    try {
+      const endpoint = category === 'shoes' ? '/shoes' : '/equipment'; // Adjust endpoint based on category
+      const body =
+        category === 'shoes'
+          ? { id: enteredId, name: enteredName, size: enteredSize }
+          : { id: enteredId, type: enteredType, sport: enteredSport };
+
+      const response = await fetch(`http://localhost:3000${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (response.ok) {
+        const result = await response.text();
+        console.log(result); // Log the server response
+        alert(`${category.charAt(0).toUpperCase() + category.slice(1)} added successfully!`);
+      } else {
+        const errorText = await response.text();
+        console.error(`Error adding ${category}:`, errorText);
+        alert(`Failed to add ${category}: ${errorText}`);
+      }
+    } catch (error) {
+      console.error(`Error adding ${category}:`, error);
+      alert(`Failed to add ${category}. Please try again.`);
     }
   };
 
@@ -29,6 +68,17 @@ const Inventory = () => {
 
   return (
     <div className="inventory-container">
+      <div>
+        <label htmlFor="category">Select Category:</label>
+        <select
+          id="category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <option value="shoes">Shoes</option>
+          <option value="equipment">Equipment</option>
+        </select>
+      </div>
       <div className="inventory-sections">
         <section id="equipment">
           <div className="section-header-container">
