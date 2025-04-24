@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import About from './About';
 import Login from './Login';
 import Inventory from './Inventory';
+import Employees from './Employees';
 import './App.css';
 import { useState } from 'react';
 
@@ -31,6 +32,9 @@ function App() {
             <Link to="/login" className="login-button">
               Login
             </Link>
+            <Link to="/Employees" className="login-button">
+              Employees
+            </Link>
           </div>
         </header>
 
@@ -58,6 +62,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
             <Route path="/inventory" element={<Inventory />} />
+            <Route path="/employees" element={<Employees />} />
           </Routes>
         </main>
       </div>
