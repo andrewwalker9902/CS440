@@ -21,14 +21,15 @@ const Employees = () => {
     };
 
     return (
-        <div>
+        <div  className="employees-container">
+
             <h1>Employee Management</h1>
         <div>
             <input
                type="text"
                placeholder="Enter employee name"
                 value={newEmployee}
-                onChange={(e) => setewEmployee(e.target.value)}
+                onChange={(e) => setNewEmployee(e.target.value)}
             />
             <button onClick={addEmployee}>Add Employee</button>
             </div>

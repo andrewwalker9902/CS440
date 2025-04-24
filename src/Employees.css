@@ -1,18 +1,26 @@
-body { 
+.employees-container {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f9;
+    font-size: 14px;
 }
 
-h1 {
+.employees-container h1 {
     text-align: center;
     color: #333;
     margin-top: 20px;
-    text-align: center;
+    font-size: 24px;
 }
 
-div { 
+.employees-container h2 {
+    color: #555;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.employees-container div {
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
@@ -21,49 +29,53 @@ div {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-input[type="text"] {
-    width: calc(100% -120px);
+.employees-container input[type="text"] {
+    width: calc(100% - 120px);
     padding: 10px;
     margin-right: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    font-size: 14px;
 }
 
-button {
+.employees-container button {
     padding: 10px 15px;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 14px;
 }
 
-button:hover {
+.employees-container button:hover {
     background-color: #0056b3;
 }
 
-ul {
+.employees-container ul {
     list-style-type: none;
     padding: 0;
 }
 
-li {
+.employees-container li {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #ddd;
+    font-size: 14px;
 }
 
-li:last-child {
+.employees-container li:last-child {
     border-bottom: none;
 }
 
-li button {
+.employees-container li button {
     background-color: #dc3545;
     padding: 5px 10px;
+    font-size: 12px;
 }
 
-li button:hover {
+.employees-container li button:hover {
     background-color: #a71d2a;
 }
