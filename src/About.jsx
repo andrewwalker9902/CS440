@@ -13,6 +13,16 @@ function About() {
           the people behind our success.
         </p>
       </section>
+      <section className="dropdown-section">
+        <div className="dropdown">
+          <button className="dropbtn">Categories</button>
+          <div className="dropdown-content">
+            <button onClick={fetchShoes}>Shoes</button>
+            <button onClick={fetchApparel}>Apparel</button>
+            <button onClick={fetchEquipment}>Equipment</button>
+          </div>
+        </div>
+      </section>
       <section className="founder-section">
         <img
           src="roy2.jpg"

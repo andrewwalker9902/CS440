@@ -126,16 +126,17 @@ body {
 }
 
 main {
-  flex: 1;
-  width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 30px 20px;
+  flex-direction: column;
+  align-items: center; /* Center child elements horizontally */
+  justify-content: flex-start; /* Align child elements to the top */
+  padding: 20px;
+  width: 100%;
   text-align: center;
   background-color: #ffffff; /* Light background */
-  color: #111111;            /* Dark text */
+  color: #111111; /* Dark text */
   min-height: calc(100vh - 60px); /* Full screen minus header */
+  display: block; /* Change from flex to block to avoid vertical centering */
 }
 
 section {
@@ -258,3 +259,83 @@ section {
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #ff0000;}
+
+/* Welcome Section */
+.welcome-section {
+  display: flex; /* Use flexbox for centering */
+  flex-direction: column; /* Stack title and subtitle vertically */
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  text-align: center; /* Center-align the text */
+  margin: 0 auto; /* Center the section horizontally */
+  padding: 20px; /* Add padding for spacing */
+  background-color: #f9f9f9; /* Optional: Light background for the section */
+  border-bottom: 1px solid #ddd; /* Optional: Add a subtle border below */
+  max-width: 800px; /* Limit the width of the section */
+  height: 200px; /* Adjust height as needed */
+}
+
+.welcome-title {
+  font-size: 32px; /* Larger font size for the title */
+  font-weight: bold; /* Make the title bold */
+  color: #a51717; /* Match the header color */
+  margin-bottom: 10px; /* Add spacing below the title */
+}
+
+.welcome-subtitle {
+  font-size: 18px; /* Slightly smaller font size for the subtitle */
+  color: #333; /* Darker text color for readability */
+}
+
+/* Dropdown Section */
+.dropdown-section {
+  position: absolute; /* Position relative to the viewport */
+  top: 70px; /* Adjust to place it just below the navbar */
+  left: 20px; /* Align it to the left of the screen */
+  z-index: 1000; /* Ensure it appears above other elements */
+}
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: #ff0000; /* Red background */
+  color: white; /* White text */
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px; /* Optional: Rounded corners */
+}
+
+/* Dropdown Content */
+.dropdown-content {
+  display: none; /* Hidden by default */
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 4px; /* Optional: Rounded corners */
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Dropdown Links */
+.dropdown-content button {
+  background: none;
+  border: none;
+  color: #333;
+  padding: 12px 16px;
+  text-align: left;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+}
+
+.dropdown-content button:hover {
+  background-color: #ddd;
+  color: #a51717;
+}
