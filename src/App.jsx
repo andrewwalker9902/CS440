@@ -7,25 +7,25 @@ import { useState } from 'react';
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [shoes, setShoes] = useState([]); // State to store shoes data
-  const [apparel, setApparel] = useState([]); // State to store apparel data
-  const [equipment, setEquipment] = useState([]); // State to store equipment data
-  const [activeCategory, setActiveCategory] = useState(''); // State to track the active category
+  const [shoes, setShoes] = useState([]); 
+  const [apparel, setApparel] = useState([]); 
+  const [equipment, setEquipment] = useState([]);
+  const [activeCategory, setActiveCategory] = useState(''); 
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
   const fetchShoes = async () => {
-    setApparel([]); // Clear apparel data
-    setEquipment([]); // Clear equipment data
-    setActiveCategory('shoes'); // Set active category to "shoes"
+    setApparel([]); 
+    setEquipment([]); 
+    setActiveCategory('shoes');
 
     try {
       const response = await fetch('http://localhost:3000/shoes');
       if (response.ok) {
         const data = await response.json();
-        setShoes(data); // Update the state with the fetched data
+        setShoes(data); 
       } else {
         console.error('Failed to fetch shoes:', response.statusText);
       }
@@ -35,15 +35,15 @@ function App() {
   };
 
   const fetchApparel = async () => {
-    setShoes([]); // Clear shoes data
-    setEquipment([]); // Clear equipment data
-    setActiveCategory('apparel'); // Set active category to "apparel"
+    setShoes([]); 
+    setEquipment([]); 
+    setActiveCategory('apparel'); 
 
     try {
       const response = await fetch('http://localhost:3000/apparel');
       if (response.ok) {
         const data = await response.json();
-        setApparel(data); // Update the state with the fetched data
+        setApparel(data); 
       } else {
         console.error('Failed to fetch apparel:', response.statusText);
       }
@@ -53,15 +53,15 @@ function App() {
   };
 
   const fetchEquipment = async () => {
-    setShoes([]); // Clear shoes data
-    setApparel([]); // Clear apparel data
-    setActiveCategory('equipment'); // Set active category to "equipment"
+    setShoes([]); 
+    setApparel([]); 
+    setActiveCategory('equipment'); 
 
     try {
       const response = await fetch('http://localhost:3000/equipment');
       if (response.ok) {
         const data = await response.json();
-        setEquipment(data); // Update the state with the fetched data
+        setEquipment(data); 
       } else {
         console.error('Failed to fetch equipment:', response.statusText);
       }
@@ -74,9 +74,7 @@ function App() {
     <Router>
       <div className="app-container">
         <header className="header">
-          <button className="hamburger" onClick={toggleMenu}>
-            ☰
-          </button>
+
           <div className="header-title-container">
             <Link to="/" className="header-title" onClick={() => setMenuOpen(false)}>
               Roy's Sporting Center
@@ -98,7 +96,11 @@ function App() {
               path="/"
               element={
                 <section>
-                  <section className="dropdown-section">
+                  <section className="welcome-section">
+                    <h2 className="welcome-title">Welcome to Roy's!</h2>
+                    <p className="welcome-subtitle">
+                      Since our founding, we have been the place to find good stuff at prices much steeper than most!
+                    </p>
                     <div className="dropdown">
                       <button className="dropbtn">Categories</button>
                       <div className="dropdown-content">
@@ -109,15 +111,8 @@ function App() {
                     </div>
                   </section>
 
-                  <section className="welcome-section">
-                    <h2 className="welcome-title">Welcome to Roy's!</h2>
-                    <p className="welcome-subtitle">
-                      Since our founding, we have been the place to find good stuff at prices much steeper than most!
-                    </p>
-                  </section>
-
                   {activeCategory === 'shoes' && (
-                    <div>
+                    <div className="category-content">
                       <h3>Shoes</h3>
                       <ul>
                         {shoes.map((shoe) => (
@@ -128,8 +123,9 @@ function App() {
                       </ul>
                     </div>
                   )}
+
                   {activeCategory === 'apparel' && (
-                    <div>
+                    <div className="category-content">
                       <h3>Apparel</h3>
                       <ul>
                         {apparel.map((item) => (
@@ -140,8 +136,9 @@ function App() {
                       </ul>
                     </div>
                   )}
+
                   {activeCategory === 'equipment' && (
-                    <div>
+                    <div className="category-content">
                       <h3>Equipment</h3>
                       <ul>
                         {equipment.map((item) => (

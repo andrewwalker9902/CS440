@@ -1,39 +1,28 @@
-/* Reset some basic styles */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Ensure full screen layout */
 html, body, #root {
   height: 100%;
   width: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* App wrapper */
 body {
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background: #ffffff;
-
   font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #ffffff;
-
 }
 
-/* Header styles */
 .header {
   display: flex;
-  justify-content: space-between; /* Distributes space between elements */
-  align-items: center; /* Centers content vertically */
-  background-color: #a51717; /* Header background color */
-  color: white; /* Header text color */
+  justify-content: center; 
+  align-items: center;
+  position: relative;
+  background-color: #a51717;
+  color: white;
   padding: 10px 20px;
   position: sticky;
   top: 0;
@@ -42,63 +31,38 @@ body {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Hamburger + logo container */
-.header-left {
-  display: flex;
-  align-items: center;
+.header-left,
+.header-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-.hamburger {
-  font-size: 28px;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  display: block; /* Ensure the hamburger menu is visible */
+.header-left {
+  left: 20px;
+}
+
+.header-right {
+  right: 20px;
 }
 
 .header-title-container {
-  flex: 1;
-  text-align: center; /* Centers the title */
+  text-align: center;
 }
 
 .header-title {
   font-size: 24px;
   font-weight: bold;
-  text-decoration: none; /* Removes the underline */
-  color: white; /* Ensures the text is white, not blue */
+  text-decoration: none;
+  color: white;
   cursor: pointer;
 }
 
 .header-title:hover {
-  text-decoration: none; /* No underline on hover */
+  text-decoration: none;
   color: white;
 }
 
-/* Nav styles */
-.nav-links {
-  display: none;
-  flex-direction: column;
-  position: absolute;
-  top: 60px;
-  left: 10px;
-  background-color: #1a1a1a;
-  padding: 10px;
-  border-radius: 5px;
-  z-index: 1000;
-}
-
-.nav-links a {
-  color: rgb(0, 0, 0);
-  text-decoration: none;
-  padding: 8px 0;
-}
-
-.nav-links.open {
-  display: flex;
-}
-
-/* Right-side login button */
 .header-right .login-button {
   background-color: #ffffff;
   color: #1a1a1a;
@@ -106,236 +70,119 @@ body {
   text-decoration: none;
   border-radius: 4px;
   font-weight: bold;
-}
-
-/* Small Login Button */
-.login-button {
-  text-decoration: none;
-  color: #ffffff; /* White text */
-  background-color: #007BFF; /* Blue background */
-  padding: 5px 10px; /* Compact padding */
-  border-radius: 4px; /* Rounded corners */
-  font-size: 14px; /* Smaller font size */
-  font-weight: bold;
-  border: none; /* Remove border */
-  cursor: pointer;
+  margin-left: 10px;
 }
 
 .login-button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #0056b3;
+  color: white;
 }
 
 main {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Center child elements horizontally */
-  justify-content: flex-start; /* Align child elements to the top */
   padding: 20px;
   width: 100%;
-  text-align: center;
-  background-color: #ffffff; /* Light background */
-  color: #111111; /* Dark text */
-  min-height: calc(100vh - 60px); /* Full screen minus header */
-  display: block; /* Change from flex to block to avoid vertical centering */
+  background-color: #ffffff;
+  color: #111111;
+  min-height: calc(100vh - 60px);
 }
 
 section {
   max-width: 800px;
+  margin: 0 auto;
 }
 
-/* Categories Bar */
-.categories-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f4f4f4;
-  padding: 10px 0;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.categories-bar a,
-.dropdown-button {
-  margin: 0 15px;
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.categories-bar a:hover,
-.dropdown-button:hover {
-  color: #a51717;
-}
-
-/* Dropdown Menu */
-.dropdown {
-  position: relative;
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #ffffff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  padding: 10px 0;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-}
-
-.dropdown-menu a {
-  padding: 10px 20px;
-  text-decoration: none;
-  color: #333;
-  font-size: 14px;
-}
-
-.dropdown-menu a:hover {
-  background-color: #f4f4f4;
-  color: #a51717;
-}
-
-/* Responsive nav for larger screens */
-@media (min-width: 768px) {
-  .nav-links {
-    position: static;
-    display: flex !important;
-    flex-direction: row;
-    background: none;
-    padding: 0;
-  }
-
-  .nav-links a {
-    margin-left: 20px;
-    padding: 0;
-  }
-
-  .hamburger {
-    display: none; /* Hide hamburger menu on larger screens */
-  }
-}
-
-/* Dropdown Button */
-.dropbtn {
-  background-color: #ff0000;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-}
-
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd;}
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {display: block;}
-
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {background-color: #ff0000;}
-
-/* Welcome Section */
 .welcome-section {
-  display: flex; /* Use flexbox for centering */
-  flex-direction: column; /* Stack title and subtitle vertically */
-  justify-content: center; /* Center vertically */
-  align-items: center; /* Center horizontally */
-  text-align: center; /* Center-align the text */
-  margin: 0 auto; /* Center the section horizontally */
-  padding: 20px; /* Add padding for spacing */
-  background-color: #f9f9f9; /* Optional: Light background for the section */
-  border-bottom: 1px solid #ddd; /* Optional: Add a subtle border below */
-  max-width: 800px; /* Limit the width of the section */
-  height: 200px; /* Adjust height as needed */
+  width: 100%;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
 }
 
 .welcome-title {
-  font-size: 32px; /* Larger font size for the title */
-  font-weight: bold; /* Make the title bold */
-  color: #a51717; /* Match the header color */
-  margin-bottom: 10px; /* Add spacing below the title */
+  font-size: 32px;
+  font-weight: bold;
+  color: #a51717;
+  margin-bottom: 10px;
 }
 
 .welcome-subtitle {
-  font-size: 18px; /* Slightly smaller font size for the subtitle */
-  color: #333; /* Darker text color for readability */
+  font-size: 18px;
+  color: #333;
 }
 
-/* Dropdown Section */
-.dropdown-section {
-  position: absolute; /* Position relative to the viewport */
-  top: 70px; /* Adjust to place it just below the navbar */
-  left: 20px; /* Align it to the left of the screen */
-  z-index: 1000; /* Ensure it appears above other elements */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-top: 15px;
 }
 
-/* Dropdown Button */
 .dropbtn {
-  background-color: #ff0000; /* Red background */
-  color: white; /* White text */
-  padding: 16px;
-  font-size: 16px;
+  background-color: #ff0000;
+  color: white;
+  padding: 12px;
+  font-size: 14px;
   border: none;
   cursor: pointer;
-  border-radius: 4px; /* Optional: Rounded corners */
+  border-radius: 8px;
 }
 
-/* Dropdown Content */
 .dropdown-content {
-  display: none; /* Hidden by default */
+  display: none;
   position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   background-color: #f1f1f1;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  border-radius: 4px; /* Optional: Rounded corners */
+  border-radius: 4px;
 }
 
-/* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
   display: block;
 }
 
-/* Dropdown Links */
 .dropdown-content button {
   background: none;
   border: none;
   color: #333;
   padding: 12px 16px;
   text-align: left;
-  text-decoration: none;
-  display: block;
   width: 100%;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .dropdown-content button:hover {
   background-color: #ddd;
   color: #a51717;
+}
+
+.category-content {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.category-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.category-content li {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    right: 10px;
+  }
+
+  .header-right .login-button {
+    margin: 5px 0;
+  }
 }
