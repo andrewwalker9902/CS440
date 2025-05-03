@@ -1,220 +1,154 @@
-import React, { useState } from 'react';
-import './Inventory.css'; // Import the Inventory-specific styles
+import React, { useState, useEffect } from 'react';
+import './Inventory.css';
 
 const Inventory = () => {
-  const handleAdd = async (category) => {
+  const [equipmentData, setEquipmentData] = useState([]);
+  const [apparelData, setApparelData] = useState([]);
+  const [shoesData, setShoesData] = useState([]);
+
+  const fetchData = async (category, setter) => {
+    try {
+      const response = await fetch(`http://localhost:3000/${category}`);
+      if (response.ok) {
+        const data = await response.json();
+        setter(data);
+      } else {
+        console.error(`Failed to fetch ${category} data`);
+      }
+    } catch (error) {
+      console.error(`Error fetching ${category} data:`, error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData('equipment', setEquipmentData);
+    fetchData('apparel', setApparelData);
+    fetchData('shoes', setShoesData);
+  }, []);
+
+  const refreshCategory = (category) => {
+    if (category === 'equipment') fetchData('equipment', setEquipmentData);
+    else if (category === 'apparel') fetchData('apparel', setApparelData);
+    else if (category === 'shoes') fetchData('shoes', setShoesData);
+  };
+
+  const handleAction = async (action, category) => {
+    const identifier = prompt(`Enter the unique identifier for ${category} : item (equipment), type (apparel), or style (shoes):`);
     let body = {};
 
-    if (category === 'shoes') {
-      body = {
-        style: prompt('Enter the Style:'),
-        brand: prompt('Enter the Brand:'),
-        color: prompt('Enter the Color:'),
-        price: prompt('Enter the Price:'),
-        gender: prompt('Enter the Gender:'),
-        age: prompt('Enter the Age:'),
-        size: prompt('Enter the Size:'),
-      };
-    } else if (category === 'equipment') {
-      body = {
-        item: prompt('Enter the Item:'),
-        sport: prompt('Enter the Sport:'),
-        price: prompt('Enter the Price:'),
-        stock: prompt('Enter the Stock:'),
-        age_range: prompt('Enter the Age Range:'),
-        brand: prompt('Enter the Brand:'),
-      };
-    } else if (category === 'apparel') {
-      body = {
-        type: prompt('Enter the Type:'),
-        brand: prompt('Enter the Brand:'),
-        color: prompt('Enter the Color:'),
-        size: prompt('Enter the Size:'),
-        price: prompt('Enter the Price:'),
-        stock: prompt('Enter the Stock:'),
-        gender: prompt('Enter the Gender:'),
-      };
-    }
+    const prompts = {
+      shoes: ['brand', 'color', 'price', 'gender', 'age', 'size'],
+      equipment: ['sport', 'price', 'stock', 'age_range', 'brand'],
+      apparel: ['brand', 'color', 'size', 'price', 'stock', 'gender']
+    };
 
-    try {
+    if (action === 'add') {
+      if (category === 'shoes') {
+        body = {
+          style: identifier,
+          ...Object.fromEntries(prompts.shoes.map((field) => [field, prompt(`Enter ${field}:`)]))
+        };
+      } else if (category === 'equipment') {
+        body = {
+          item: identifier,
+          ...Object.fromEntries(prompts.equipment.map((field) => [field, prompt(`Enter ${field}:`)]))
+        };
+      } else if (category === 'apparel') {
+        body = {
+          type: identifier,
+          ...Object.fromEntries(prompts.apparel.map((field) => [field, prompt(`Enter ${field}:`)]))
+        };
+      }
+
       const response = await fetch(`http://localhost:3000/${category}`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
       });
 
       if (response.ok) {
-        alert(`${category.charAt(0).toUpperCase() + category.slice(1)} added successfully!`);
+        alert(`${category} added successfully!`);
+        refreshCategory(category);
       } else {
-        const errorText = await response.text();
-        alert(`Failed to add ${category}: ${errorText}`);
+        alert(`Failed to add ${category}`);
       }
-    } catch (error) {
-      console.error(`Error adding ${category}:`, error);
-      alert(`Failed to add ${category}. Please try again.`);
-    }
-  };
-
-  const handleUpdate = async (category) => {
-    const identifier = prompt(`Enter the unique identifier for the ${category} to update (e.g., style for shoes, item for equipment, type for apparel):`);
-    let body = {};
-
-    if (category === 'shoes') {
-      body = {
-        brand: prompt('Enter the new Brand (leave blank to skip):'),
-        color: prompt('Enter the new Color (leave blank to skip):'),
-        price: prompt('Enter the new Price (leave blank to skip):'),
-        gender: prompt('Enter the new Gender (leave blank to skip):'),
-        age: prompt('Enter the new Age (leave blank to skip):'),
-        size: prompt('Enter the new Size (leave blank to skip):'),
-      };
-    } else if (category === 'equipment') {
-      body = {
-        sport: prompt('Enter the new Sport (leave blank to skip):'),
-        price: prompt('Enter the new Price (leave blank to skip):'),
-        stock: prompt('Enter the new Stock (leave blank to skip):'),
-        age_range: prompt('Enter the new Age Range (leave blank to skip):'),
-        brand: prompt('Enter the new Brand (leave blank to skip):'),
-      };
-    } else if (category === 'apparel') {
-      body = {
-        brand: prompt('Enter the new Brand (leave blank to skip):'),
-        color: prompt('Enter the new Color (leave blank to skip):'),
-        size: prompt('Enter the new Size (leave blank to skip):'),
-        price: prompt('Enter the new Price (leave blank to skip):'),
-        stock: prompt('Enter the new Stock (leave blank to skip):'),
-        gender: prompt('Enter the new Gender (leave blank to skip):'),
-      };
     }
 
-    try {
+    if (action === 'update') {
+      body = Object.fromEntries(prompts[category].map((field) => [field, prompt(`Enter new ${field} (blank to skip):`)]));
       const response = await fetch(`http://localhost:3000/${category}/${identifier}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
       });
-
       if (response.ok) {
-        alert(`${category.charAt(0).toUpperCase() + category.slice(1)} updated successfully!`);
+        alert(`${category} updated successfully!`);
+        refreshCategory(category);
       } else {
-        const errorText = await response.text();
-        alert(`Failed to update ${category}: ${errorText}`);
+        alert(`Failed to update ${category}`);
       }
-    } catch (error) {
-      console.error(`Error updating ${category}:`, error);
-      alert(`Failed to update ${category}. Please try again.`);
     }
-  };
 
-  const handleDelete = async (category) => {
-    const identifier = prompt(`Enter the unique identifier for the ${category} to delete (e.g., style for shoes, item for equipment, type for apparel):`);
-
-    try {
+    if (action === 'delete') {
       const response = await fetch(`http://localhost:3000/${category}/${identifier}`, {
-        method: 'DELETE',
-      });
-
+        method: 'DELETE' });
       if (response.ok) {
-        alert(`${category.charAt(0).toUpperCase() + category.slice(1)} deleted successfully!`);
+        alert(`${category} deleted successfully!`);
+        refreshCategory(category);
       } else {
-        const errorText = await response.text();
-        alert(`Failed to delete ${category}: ${errorText}`);
+        alert(`Failed to delete ${category}`);
       }
-    } catch (error) {
-      console.error(`Error deleting ${category}:`, error);
-      alert(`Failed to delete ${category}. Please try again.`);
     }
   };
 
-  const handleDropdownChange = (event, category) => {
-    const action = event.target.value;
-    if (action === 'add') {
-      handleAdd(category);
-    } else if (action === 'update') {
-      handleUpdate(category);
-    } else if (action === 'delete') {
-      handleDelete(category);
-    }
-  };
+  const renderSection = (title, category, data, columns) => (
+    <section id={category}>
+      <div className="section-header-container">
+        <select
+          className="dropdown-header"
+          onChange={(e) => {
+            const val = e.target.value;
+            e.target.selectedIndex = 0; // Reset dropdown
+            if (val) handleAction(val, category);
+          }}
+        >
+          <option value="">{title}</option>
+          <option value="add">Add</option>
+          <option value="update">Update</option>
+          <option value="delete">Delete</option>
+        </select>
+      </div>
+      <div className="table-wrapper">
+        <table className="inventory-table">
+          <thead>
+            <tr>
+              {columns.map((col, i) => (<th key={i}>{col}</th>))}
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((item, i) => (
+              <tr key={i}>
+                {columns.map((col, j) => {
+                  const key = col.toLowerCase().replace(/ /g, '_');
+                  const value = item[key] ?? '';
+                  const display = col === 'Price' ? `$${value}` : value;
+                  return <td key={j}>{display}</td>;
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+  
 
   return (
     <div className="inventory-container">
       <div className="inventory-sections">
-        {/* Equipment Section */}
-        <section id="equipment">
-          <div className="section-header-container">
-            <h2 className="section-header">Equipment</h2>
-            <div style={{ position: 'relative' }}>
-              <select
-                className="dropdown-menu"
-                onChange={(e) => handleDropdownChange(e, 'equipment')}
-                defaultValue=""
-              >
-                <option value="" disabled>
-                  Select Action
-                </option>
-                <option value="add">Add</option>
-                <option value="update">Update</option>
-                <option value="delete">Delete</option>
-              </select>
-            </div>
-          </div>
-          <p>
-            This section contains all the equipment-related items. Add your content here.
-          </p>
-        </section>
-
-        {/* Apparel Section */}
-        <section id="apparel">
-          <div className="section-header-container">
-            <h2 className="section-header">Apparel</h2>
-            <div style={{ position: 'relative' }}>
-              <select
-                className="dropdown-menu"
-                onChange={(e) => handleDropdownChange(e, 'apparel')}
-                defaultValue=""
-              >
-                <option value="" disabled>
-                  Select Action
-                </option>
-                <option value="add">Add</option>
-                <option value="update">Update</option>
-                <option value="delete">Delete</option>
-              </select>
-            </div>
-          </div>
-          <p>
-            This section contains all the apparel-related items. Add your content here.
-          </p>
-        </section>
-
-        {/* Shoes Section */}
-        <section id="shoes">
-          <div className="section-header-container">
-            <h2 className="section-header">Shoes</h2>
-            <div style={{ position: 'relative' }}>
-              <select
-                className="dropdown-menu"
-                onChange={(e) => handleDropdownChange(e, 'shoes')}
-                defaultValue=""
-              >
-                <option value="" disabled>
-                  Select Action
-                </option>
-                <option value="add">Add</option>
-                <option value="update">Update</option>
-                <option value="delete">Delete</option>
-              </select>
-            </div>
-          </div>
-          <p>
-            This section contains all the shoe-related items. Add your content here.
-          </p>
-        </section>
+        {renderSection('Equipment', 'equipment', equipmentData, ['Item', 'Sport', 'Price', 'Stock', 'Age Range', 'Brand'])}
+        {renderSection('Apparel', 'apparel', apparelData, ['Type', 'Brand', 'Color', 'Size', 'Price', 'Stock', 'Gender'])}
+        {renderSection('Shoes', 'shoes', shoesData, ['Style', 'Brand', 'Color', 'Price', 'Gender', 'Age', 'Size'])}
       </div>
     </div>
   );
