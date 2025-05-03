@@ -25,47 +25,62 @@ db.connect((err) => {
 });
 
 app.get('/shoes', (req, res) => {
-  const query = 'SELECT * FROM Shoe';
+  const maxPrice = req.query.maxPrice;
+  const query = maxPrice
+    ? 'SELECT * FROM Shoe WHERE price <= ?'
+    : 'SELECT * FROM Shoe';
 
-  db.query(query, (err, results) => {
+  const params = maxPrice ? [maxPrice] : [];
+
+  db.query(query, params, (err, results) => {
     if (err) {
-      console.error('Error executing query:', err);
+      console.error('Error executing shoe query:', err);
       res.status(500).send('Error querying the database.');
       return;
     }
-    console.log("Shoe table: ", results);
     res.json(results);
   });
 });
+
 
 
 app.get('/equipment', (req, res) => {
-  const query = 'SELECT * FROM Equipment';
+  const maxPrice = req.query.maxPrice;
+  const query = maxPrice
+    ? 'SELECT * FROM Equipment WHERE price <= ?'
+    : 'SELECT * FROM Equipment';
 
-  db.query(query, (err, results) => {
+  const params = maxPrice ? [maxPrice] : [];
+
+  db.query(query, params, (err, results) => {
     if (err) {
-      console.error('Error executing query:', err);
+      console.error('Error executing equipment query:', err);
       res.status(500).send('Error querying the database.');
       return;
     }
-    console.log("Equipment table: ", results);
     res.json(results);
   });
 });
+
 
 app.get('/apparel', (req, res) => {
-  const query = 'SELECT * FROM Apparel';
+  const maxPrice = req.query.maxPrice;
+  const query = maxPrice
+    ? 'SELECT * FROM Apparel WHERE price <= ?'
+    : 'SELECT * FROM Apparel';
 
-  db.query(query, (err, results) => {
+  const params = maxPrice ? [maxPrice] : [];
+
+  db.query(query, params, (err, results) => {
     if (err) {
-      console.error('Error executing query:', err);
+      console.error('Error executing apparel query:', err);
       res.status(500).send('Error querying the database.');
       return;
     }
-    console.log("Apparel table: ", results);
     res.json(results);
   });
 });
+
 
 app.get('/employee', (req, res) => {
   const query = 'SELECT * FROM employee';
@@ -84,18 +99,18 @@ app.get('/employee', (req, res) => {
 // Route to insert a new shoe
 app.post('/shoes', (req, res) => {
   console.log('Request body:', req.body);
-  const { style, brand, color, price, gender, age, size } = req.body;
+  const { style, brand, color, price, stock, age, size } = req.body;
 
-  if (!style || !brand || !color || !price || !gender || !age || !size) {
-    return res.status(400).send('Missing required fields: style, brand, color, price, gender, age, or size.');
+  if (!style || !brand || !color || !price || !stock || !age || !size) {
+    return res.status(400).send('Missing required fields: style, brand, color, price, stock, age, or size.');
   }
 
   const query = `
-    INSERT INTO Shoe (style, brand, color, price, gender, age, size) 
+    INSERT INTO Shoe (style, brand, color, price, stock, age, size) 
     VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
 
-  db.query(query, [style, brand, color, price, gender, age, size], (err, results) => {
+  db.query(query, [style, brand, color, price, stock, age, size], (err, results) => {
     if (err) {
       console.error('Error executing query:', err);
       return res.status(500).send('Error inserting into the database.');
@@ -185,7 +200,7 @@ app.post('/apparel', (req, res) => {
 app.put('/shoes/:style', (req, res) => {
   console.log('Request body:', req.body);
   const { style } = req.params;
-  const { brand, color, price, gender, age, size } = req.body;
+  const { brand, color, price, stock, age, size } = req.body;
 
   // Build the query dynamically based on provided fields, allowing all fields to be optional
   const fields = [];
@@ -203,9 +218,9 @@ app.put('/shoes/:style', (req, res) => {
     fields.push('price = ?');
     values.push(price);
   }
-  if (gender) {
-    fields.push('gender = ?');
-    values.push(gender);
+  if (stock) {
+    fields.push('stock = ?');
+    values.push(stock);
   }
   if (age) {
     fields.push('age = ?');
@@ -508,6 +523,25 @@ app.delete('/apparel/:type', (req, res) => {
     res.status(200).send('Apparel item deleted successfully.');
   });
 });
+
+app.get('/summary/stock', (req, res) => {
+  const query = `
+    SELECT 'Shoes' AS category, SUM(stock) AS total_stock FROM Shoe
+    UNION
+    SELECT 'Apparel' AS category, SUM(stock) FROM Apparel
+    UNION
+    SELECT 'Equipment' AS category, SUM(stock) FROM Equipment
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error executing stock summary query:', err);
+      return res.status(500).send('Error querying stock summary.');
+    }
+    res.json(results);
+  });
+});
+
 
 // Start the server
 app.listen(port, () => {

@@ -46,7 +46,7 @@ const Employees = () => {
             }
 
             setNewEmployee({ email: '', first_name: '', last_name: '', phone: '' });
-            fetchEmployees(); // Refresh list after adding
+            fetchEmployees();
         } catch (error) {
             console.error('Error adding employee:', error);
         }
@@ -62,7 +62,7 @@ const Employees = () => {
                 throw new Error('Failed to delete employee');
             }
 
-            fetchEmployees(); // Refresh list after deleting
+            fetchEmployees();
         } catch (error) {
             console.error('Error deleting employee:', error);
         }
@@ -70,8 +70,8 @@ const Employees = () => {
 
     return (
         <div className="employees-container">
-            <h1>Employee Management</h1>
-            <div>
+            <h2 className="section-header">Employee Management</h2>
+            <div className="form-wrapper">
                 <input
                     type="email"
                     placeholder="Email"
@@ -96,18 +96,35 @@ const Employees = () => {
                     value={newEmployee.phone}
                     onChange={(e) => setNewEmployee({ ...newEmployee, phone: e.target.value })}
                 />
-                <button onClick={addEmployee}>Add Employee</button>
+                <button className="primary-button" onClick={addEmployee}>Add Employee</button>
             </div>
 
-            <h2>Employee List</h2>
-            <ul>
-                {employees.map((emp) => (
-                    <li key={emp.email}>
-                        {emp.first_name} {emp.last_name} ({emp.email}, {emp.phone}){' '}
-                        <button onClick={() => deleteEmployee(emp.email)}>Remove</button>
-                    </li>
-                ))}
-            </ul>
+            <div className="table-wrapper">
+                <table className="inventory-table">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {employees.map((emp) => (
+                            <tr key={emp.email}>
+                                <td>{emp.first_name}</td>
+                                <td>{emp.last_name}</td>
+                                <td>{emp.email}</td>
+                                <td>{emp.phone}</td>
+                                <td>
+                                    <button className="delete-button" onClick={() => deleteEmployee(emp.email)}>Remove</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };

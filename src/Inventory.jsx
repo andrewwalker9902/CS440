@@ -37,7 +37,7 @@ const Inventory = () => {
     let body = {};
 
     const prompts = {
-      shoes: ['brand', 'color', 'price', 'gender', 'age', 'size'],
+      shoes: ['brand', 'color', 'price', 'stock', 'age', 'size'],
       equipment: ['sport', 'price', 'stock', 'age_range', 'brand'],
       apparel: ['brand', 'color', 'size', 'price', 'stock', 'gender']
     };
@@ -148,7 +148,7 @@ const Inventory = () => {
       <div className="inventory-sections">
         {renderSection('Equipment', 'equipment', equipmentData, ['Item', 'Sport', 'Price', 'Stock', 'Age Range', 'Brand'])}
         {renderSection('Apparel', 'apparel', apparelData, ['Type', 'Brand', 'Color', 'Size', 'Price', 'Stock', 'Gender'])}
-        {renderSection('Shoes', 'shoes', shoesData, ['Style', 'Brand', 'Color', 'Price', 'Gender', 'Age', 'Size'])}
+        {renderSection('Shoes', 'shoes', shoesData, ['Style', 'Brand', 'Color', 'Price', 'Stock', 'Age', 'Size'])}
       </div>
     </div>
   );
