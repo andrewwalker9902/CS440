@@ -79,3 +79,16 @@
 .employees-container li button:hover {
     background-color: #a71d2a;
 }
+
+.employees-container {
+    padding: 20px;
+}
+
+.form-group input {
+    margin: 5px;
+    padding: 5px;
+}
+
+button {
+    margin-left: 5px;
+}
