@@ -1,12 +1,12 @@
-# React + Vite
+Requirements:
+React
+Node.js
+MySQL Server
+Express.js
+Load provided database model
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Directions to run:
+Run front end using a command like "npm run dev"
+server.js is the backend, and can be ran with node using "node /pathto/server.js"
+MySQL Connection is ran using a hardcoded login of user:root and password:root. If using different
+credentials, modify accordingly in server.js.
